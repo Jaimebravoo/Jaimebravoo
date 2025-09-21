@@ -5,159 +5,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para ti preciosa</title>
   <style>
-    *,
-    *::after,
-    *::before {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --dark-color: #000;
-      --fl-speed: 0.8s;
-      --speed-leaf: 2s;
-    }
-
     body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow: hidden;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      min-height: 100vh;
-      background-color: var(--dark-color);
-      overflow: hidden;
-      perspective: 1000px;
     }
 
-    /* ===== FRASE ANIMADA ===== */
-    .mensaje {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 200;
-      text-align: center;
-      animation: fadeOut 5s ease forwards;
-      animation-delay: 3s;
-    }
-
-    .mensaje h1 {
-      font-size: 3rem;
-      font-weight: bold;
-      color: #fff;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      animation: subir 2s ease-out forwards;
-    }
-
-    @keyframes subir {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, 50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-      }
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    /* ===== ESTRELLAS FUGACES ===== */
-    .shooting-stars {
+    /* --- Estrellas fugaces --- */
+    .night {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      z-index: 10;
+    }
+
+    .shooting-stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
 
     .shooting-star {
       position: absolute;
-      top: 0;
-      left: 50%;
-      width: 3px;
-      height: 80px;
-      background: linear-gradient(180deg, #fff, transparent);
-      animation: shooting 3s linear infinite;
-      opacity: 0.8;
+      width: 150px;
+      height: 2px;
+      background: linear-gradient(-45deg, #fff, rgba(255, 255, 255, 0));
+      border-radius: 999px;
+      filter: drop-shadow(0 0 6px #fff);
+      top: calc(50% - 1px);
+      left: -150px;
+      animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
     }
 
-    .shooting-star:nth-child(2) { left: 20%; animation-delay: 1s; }
-    .shooting-star:nth-child(3) { left: 70%; animation-delay: 2s; }
-    .shooting-star:nth-child(4) { left: 40%; animation-delay: 1.5s; }
-    .shooting-star:nth-child(5) { left: 80%; animation-delay: 2.5s; }
-    .shooting-star:nth-child(6) { left: 30%; animation-delay: 0.5s; }
-    .shooting-star:nth-child(7) { left: 60%; animation-delay: 2.2s; }
-    .shooting-star:nth-child(8) { left: 10%; animation-delay: 1.2s; }
+    @keyframes tail {
+      0% { width: 0; }
+      30% { width: 150px; }
+      100% { width: 0; }
+    }
 
     @keyframes shooting {
-      0% { transform: translateY(-100px) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      100% { transform: translateY(100vh) translateX(200px); opacity: 0; }
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(100vw) translateY(100vh); }
     }
 
-    /* ===== FLORES (resumen de tu estilo original) ===== */
+    /* --- Frases animadas --- */
+    .frase-container {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3vmin;
+      font-family: "Segoe UI", sans-serif;
+      color: #fff;
+      text-align: center;
+      z-index: 50;
+      width: 90%;
+      max-width: 600px;
+      overflow: hidden;
+    }
+
+    .frase {
+      position: absolute;
+      opacity: 0;
+      width: 100%;
+      animation: cambiarFrase 16s infinite;
+      text-shadow: 0 0 10px #00eaff, 0 0 20px #ffcc00;
+    }
+
+    .frase:nth-child(1) { animation-delay: 0s; }
+    .frase:nth-child(2) { animation-delay: 4s; }
+    .frase:nth-child(3) { animation-delay: 8s; }
+    .frase:nth-child(4) { animation-delay: 12s; }
+
+    @keyframes cambiarFrase {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      25% { opacity: 1; transform: translateY(0); }
+      35% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 0; }
+    }
+
+    /* --- Flores (decorativas) --- */
     .flowers {
       position: relative;
-      transform: scale(0.9);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-bottom: 30px;
+      z-index: 10;
     }
 
     .flower {
-      position: absolute;
-      bottom: 10vmin;
-      transform-origin: bottom center;
-      z-index: 20;
+      width: 60px;
+      height: 60px;
+      background: yellow;
+      border-radius: 50%;
+      position: relative;
+      margin: 0 15px;
+      box-shadow: 0 0 20px rgba(255,255,0,0.6);
     }
 
-    /* puedes pegar aquí todo tu CSS de flores tal cual lo tenías */
+    .flower::before,
+    .flower::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: yellow;
+      border-radius: 50%;
+      top: -20px;
+      left: 0;
+      transform: scale(0.8);
+      opacity: 0.7;
+    }
+
+    .flower::after {
+      top: auto;
+      bottom: -20px;
+    }
   </style>
 </head>
 <body>
-  <!-- Frase animada -->
-  <div class="mensaje">
-    <h1>PARA TI PRECIOSA</h1>
-  </div>
+  <div class="night"></div>
 
-  <!-- Estrellas fugaces -->
   <div class="shooting-stars">
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
     <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
-    <div class="shooting-star"></div>
+  </div>
+
+  <!-- Frases que cambian -->
+  <div class="frase-container">
+    <div class="frase">✨ PARA TI PRECIOSA ✨</div>
+    <div class="frase">🌻 ERES MI GIRASOL 🌻</div>
+    <div class="frase">💫 MI ESTRELLA FAVORITA 💫</div>
+    <div class="frase">💖 TE QUIERO MUCHO 💖</div>
   </div>
 
   <!-- Flores -->
   <div class="flowers">
-    <!-- Aquí va tu estructura completa de girasoles -->
-    <!-- Ejemplo de una flor: -->
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__leaf flower__leaf--1"></div>
-        <div class="flower__leaf flower__leaf--2"></div>
-        <div class="flower__leaf flower__leaf--3"></div>
-        <div class="flower__leaf flower__leaf--4"></div>
-        <div class="flower__white-circle"></div>
-      </div>
-      <div class="flower__line">
-        <div class="flower__line__leaf flower__line__leaf--1"></div>
-        <div class="flower__line__leaf flower__line__leaf--2"></div>
-        <div class="flower__line__leaf flower__line__leaf--3"></div>
-        <div class="flower__line__leaf flower__line__leaf--4"></div>
-      </div>
-    </div>
-    <!-- duplica y ajusta para más flores -->
+    <div class="flower"></div>
+    <div class="flower"></div>
+    <div class="flower"></div>
   </div>
 </body>
 </html>
